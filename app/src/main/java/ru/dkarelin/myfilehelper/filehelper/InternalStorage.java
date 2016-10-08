@@ -3,10 +3,13 @@ package ru.dkarelin.myfilehelper.filehelper;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import java.io.File;
+
 /**
  * Внутреннее хранилище
  */
-public class InternalStorage implements Storage{
+public class InternalStorage extends BaseFileOperations
+        implements Storage{
 
     private Context context;
 
@@ -94,7 +97,139 @@ public class InternalStorage implements Storage{
     }
 
 
-    // *****************
+
+
+    // ***************** READ FILE *****************************************
+
+
+    /**
+     *
+     *
+     * @param dirName
+     * @param fileName
+     * @return
+     */
+    public byte[] readFile(String dirName, String fileName) {
+
+
+        return null;   // zaglusgka !!!
+    }
+
+
+    /**
+     *
+     *
+     * @param dirName
+     * @param fileName
+     * @return
+     */
+    public String readTextFile(String dirName, String fileName) {
+
+
+        return null;   // zaglusgka !!!
+    }
+
+
+
+    /**
+     *
+     *
+     * @param dirName
+     * @param fileName
+     * @return
+     */
+    public Bitmap readBitmapFile(String dirName, String fileName) {
+
+
+        return null;   // zaglusgka !!!
+    }
+
+
+    // ************** APPAND TO FILE **************************
+
+    /**
+     *
+     *
+     * @param dirName
+     * @param fileName
+     * @param appendString
+     * @return
+     */
+    public boolean appendFile(String dirName, String fileName, String appendString) {
+
+
+        return true;  // Content appended !!!!
+    }
+
+
+    /**
+     *
+     *
+     * @param dirName
+     * @param fileName
+     * @param appendBytes
+     * @return
+     */
+    public boolean appendFile(String dirName, String fileName, byte[] appendBytes) {
+
+
+        return true;  // Content appended !!!!
+    }
+
+
+
+
+    // *********** COPY FILES ***********************
+
+    /**
+     *
+     *
+     * @param inputFile
+     * @param dirName
+     * @param newFile
+     */
+    public void copyFiles(File inputFile, String dirName, String newFile) {
+
+    }
+
+
+    // *************** MOVE FILES **************************
+
+    /**
+     *
+     *
+     * @param inputFile
+     * @param dirName
+     * @param newFileName
+     */
+    public void moveFiles(File inputFile, String dirName, String newFileName) {
+
+    }
+
+
+
+    // ************ DELETE DIRRECTORY ***************************
+
+    /**
+     *
+     *
+     * @param dirName
+     * @return
+     */
+    public boolean deleteDirectory(String dirName) {
+
+
+        return true;  // Directory deleted
+    }
+
+
+    // **************** DELETE FILES *********************************
+
+
+    public boolean deleteFile(String dirname, String filename) {
+
+        return true;   // file deleted
+    }
 
 
 

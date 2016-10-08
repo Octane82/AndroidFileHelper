@@ -5,7 +5,8 @@ import android.content.Context;
 /**
  * Внешнее хранилище
  */
-public class ExternalStorage implements Storage {
+public class ExternalStorage extends BaseFileOperations
+        implements Storage {
 
     private Context context;
 
