@@ -5,12 +5,16 @@ import android.content.Context;
 /**
  * Выбор хранилища
  */
-public class SimpleStorage {
+public class FileStorage {
 
-
-    public static Storage getInternalStorage(Context context) {
+    // TODO: TEMP !!!!
+    public static InternalStorage getInternalStorage(Context context) {
         return new InternalStorage(context);
     }
+
+    /*public static Storage getInternalStorage(Context context) {
+        return new InternalStorage(context);
+    }*/
 
 
     public static Storage getExternalStorage(Context context) {

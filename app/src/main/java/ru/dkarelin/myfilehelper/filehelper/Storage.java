@@ -5,6 +5,6 @@ package ru.dkarelin.myfilehelper.filehelper;
  */
 public interface Storage {
 
-
+    boolean createDirrectory(String path);
 
 }

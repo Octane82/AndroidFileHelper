@@ -15,4 +15,8 @@ public class ExternalStorage extends BaseFileOperations
     }
 
 
+    @Override
+    public boolean createDirrectory(String path) {
+        return false;
+    }
 }

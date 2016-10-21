@@ -2,14 +2,21 @@ package ru.dkarelin.myfilehelper.filehelper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.List;
 
 /**
  * Внутреннее хранилище
  */
 public class InternalStorage extends BaseFileOperations
-        implements Storage{
+        implements Storage {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     private Context context;
 
@@ -19,83 +26,74 @@ public class InternalStorage extends BaseFileOperations
 
 
 
+
+
     // ********** CREATE DIRECTORY *************************************************
 
     /**
      * Создание дирректории
-     *
-     * - "MyDir"
-     * - "MyDir/MySubDir/MySubDir"
-     * - "MyDir/MySubDir/MySubDir", true - override if exist
+     * Если существует имя файла в пути с расширением (file.txt),
+     * то возвращается false
      *
      * @param path
-     * @return
+     *      - "MyDir"
+     *      - "MyDir/MySubDir/MySubDir"
+     * @return - результат создания дирректории
+     *
+     * TODO: "MyDir/MySubDir/MySubDir", true - override if exist (OVERRIDE IF EXIST)
      */
+    @Override
     public boolean createDirrectory(String path) {
-
-
-        return true;        // dirrectory CREATED !!!!
+        return createDirrectory(context.getFilesDir(), path);
     }
 
 
 
     // ********** CREATE FILES *****************************************************
 
+
     /**
-     * Создание файла
+     * Создание файла с текстовым содержимым
      *
-     *  - dirname может быть вида myDir/MySubDir/MySubDir
-     *  - filename with extensions (file.txt)
-     *
+     * @param fullpath
+     *          -  file.txt (в корне)
+     *          -  directory/file.txt
+     *          -  directory/subdirectory/file.txt
+     * @param content
+     *          - String
+     *          - byte[]
+     *          - Bitmap
+     *          - (Storable ??? )
      * @return
      */
-    public boolean createFile(String dirName, String filename, String content) {
-
-        return true;    // file CREATED
+    public boolean createFile(String fullpath, String content) {
+        return writeTextFile(context.getFilesDir(), fullpath, content);
     }
 
 
     /**
-     * Создание файла
+     * Метод записывает массив байтов в файл
      *
-     *  - dirname может быть вида myDir/MySubDir/MySubDir
-     *  - filename with extensions (file.txt)
-     *
+     * @param fullpath
+     * @param content
      * @return
      */
-    public boolean createFile(String dirName, String filename, byte[] content) {
-
-        return true;    // file CREATED
+    public boolean createFile(String fullpath, byte[] content) {
+        return writeBinaryFile(context.getFilesDir(), fullpath, content);
     }
 
 
     /**
-     * Создание файла
+     * Метод записывает bitmap в файл
      *
-     *  - dirname может быть вида myDir/MySubDir/MySubDir
-     *  - filename with extensions (file.txt)
-     *
+     * @param fullpath
+     * @param bitmap
+     * @param bitmapType
      * @return
      */
-    public boolean createFile(String dirName, String filename, Bitmap content) {
-
-        return true;    // file CREATED
+    public boolean createFile(String fullpath, Bitmap bitmap, int bitmapType) {
+        return writeBitmapFile(context.getFilesDir(), fullpath, bitmap, bitmapType);
     }
-
-
-    /**
-     * Создание файла
-     *
-     *  - dirname может быть вида myDir/MySubDir/MySubDir
-     *  - filename with extensions (file.txt)
-     *
-     * @return
-     */
-    public boolean createFile(String dirName, String filename, Storable content) {
-
-        return true;    // file CREATED
-    }
-
 
 
 
@@ -103,49 +101,41 @@ public class InternalStorage extends BaseFileOperations
 
 
     /**
+     * Метод читает текстовый файл
      *
-     *
-     * @param dirName
-     * @param fileName
-     * @return
+     * @param fullpath
+     * @return - строка текста
      */
-    public byte[] readFile(String dirName, String fileName) {
-
-
-        return null;   // zaglusgka !!!
+    public String readTextFile(String fullpath) {
+        return readTextFile(context.getFilesDir(), fullpath);
     }
 
 
     /**
+     * Метод читает двоичный файд
      *
-     *
-     * @param dirName
-     * @param fileName
+     * @param fullpath
      * @return
      */
-    public String readTextFile(String dirName, String fileName) {
-
-
-        return null;   // zaglusgka !!!
+    public byte[] readFile(String fullpath) {
+        return readBinaryFile(context.getFilesDir(), fullpath);
     }
-
 
 
     /**
+     * Метод читает bitmap файл
      *
-     *
-     * @param dirName
-     * @param fileName
+     * @param fullpath
      * @return
      */
-    public Bitmap readBitmapFile(String dirName, String fileName) {
-
-
-        return null;   // zaglusgka !!!
+    public Bitmap readBitmapFile(String fullpath) {
+        return readBitmapFromFile(context.getFilesDir(), fullpath);
     }
 
 
-    // ************** APPAND TO FILE **************************
+
+
+    // ************** APPEND TO FILE **************************
 
     /**
      *
@@ -230,6 +220,74 @@ public class InternalStorage extends BaseFileOperations
 
         return true;   // file deleted
     }
+
+
+
+
+    // ****************** GET FILES *********************************
+
+
+    /**
+     *
+     * @param dirName
+     * @param order - order type --> name, date, size
+     * @return
+     */
+    public List<File> getFiles(String dirName, int order) {
+
+        return null;  // zaglushka
+    }
+
+
+    /**
+     *
+     * @param dirName
+     * @param regex - Regular expression
+     * @return
+     */
+    public List<File> getFiles(String dirName, String regex) {
+
+        return null;  // zaglushka
+    }
+
+
+    /**
+     *
+     * @param dirName
+     * @param order - - order type --> name, date, size
+     * @return
+     */
+    public List<File> getNestedFiles(String dirName, int order) {
+
+        return null;  // zaglushka
+    }
+
+
+    public List<File> getNestedFiles(String dirName, String regex) {
+
+        return null;  // zaglushka
+    }
+
+
+
+    // **************** MORE ************************
+
+    public boolean isDirectoryExists(String dirName) {
+
+        return true;
+    }
+
+
+    public boolean isFileExists(String dirName, String fileName) {
+
+        return true;
+    }
+
+
+
+
+    // ********************* SECURITY CONFIGURATION *****************
+
 
 
 
